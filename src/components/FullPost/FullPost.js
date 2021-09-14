@@ -8,8 +8,11 @@ const FullPost = (props) => {
     const deletePost = (id) => {
         console.log(id)
         axios.delete(`http://localhost:8088/posts/${id}`)
-            .then(
+            .then(response => 
+                {
                 console.log("Success")
+                props.execute()
+                }
             )
             .catch(err => console.log(err))
     }

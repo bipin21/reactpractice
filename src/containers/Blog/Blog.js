@@ -26,8 +26,8 @@ const Blog = () => {
                         author: ' Dean'
                     }
                 });
-                setPosts([...updatedPosts]);
-                // setPosts([...response.data]);   // if you dont want to limit
+                // setPosts([...updatedPosts]);
+                setPosts([...response.data]);   // if you dont want to limit
             });
     }, [{ flag }]);
 
@@ -61,6 +61,7 @@ const Blog = () => {
                     id={selectedId}
                     title={{ ...posts[selectedId - 1] }.title}
                     body={{ ...posts[selectedId - 1] }.body}
+                    execute={updateFlag}
                 />
 
             </section>

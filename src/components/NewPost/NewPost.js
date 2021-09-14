@@ -12,7 +12,7 @@ const NewPost = (props) => {
     const [post, setPost] = useState({
         title: '',
         content: '',
-        author: ''
+        author: 'Dean'
     });
 
 
@@ -20,6 +20,11 @@ const NewPost = (props) => {
         axios.post(`http://localhost:8088/posts`, post)
             .then(data => {
                 console.log("Success", data);
+                setPost({
+                    title: '',
+                    content: '',
+                    author: ''
+                })
                 props.execute();
             }
             )
