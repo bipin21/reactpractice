@@ -6,7 +6,6 @@ import FullPost from '../../components/FullPost/FullPost';
 import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
 import axios from 'axios';
-import post from '../../components/Post/Post';
 import { APIConfig } from '../../components/APIConfig';
 
 const Blog = () => {
@@ -14,26 +13,26 @@ const Blog = () => {
     const [posts, setPosts] = useState([]);
     const base = 'http://localhost:8088';
     const [selectedId, setSelectedId] = useState(null);
-    const [flag, setFlag] = useState(false);
+    const [flag, setFlag] = useState(true);
 
 
-    useEffect(() => {
-        // axios.get('https://jsonplaceholder.typicode.com/posts')
-        axios.get('http://localhost:8088/posts')
-            .then(response => {
-                const sposts = response.data.slice(0, 5);  // This will get them but take the first 5 then you would have to change the response.data i nthe setPosts
-                const updatedPosts = sposts.map(post => {  // This will transform anything before assigning it to the state
-                    return {
-                        ...post,
-                        author: ' Dean'
-                    }
+    function fetchPostsHandler() {
+            // axios.get('https://jsonplaceholder.typicode.com/posts')
+            axios.get('http://localhost:8088/posts')
+                .then(response => {
+                    const sposts = response.data.slice(0, 10);  // This will get them but take the first 5 then you would have to change the response.data i nthe setPosts
+                    const updatedPosts = sposts.map(post => {  // This will transform anything before assigning it to the state
+                        return {
+                            ...post,
+                            author: ' Dean'
+                        }
+                    });
+                    setPosts([...updatedPosts]);
+                    // setPosts([...response.data]);   // if you dont want to limit
                 });
-                // setPosts([...updatedPosts]);
-                setPosts([...response.data]);   // if you dont want to limit
-            });
-    }, [{ flag }]);
-
-    useEffect(() => { }, [])
+    }
+    useEffect(fetchPostsHandler, [flag]);
+    
     const postSelectedHandler = (id) => {
         setSelectedId(id);
     }
@@ -53,12 +52,12 @@ const Blog = () => {
 
     // 
     return (
-        <APIConfig.Provider 
-        value={
-            {
-                postApi : base + '/posts'
-            }
-        }>
+        <APIConfig.Provider
+            value={
+                {
+                    postApi: base + '/posts'
+                }
+            }>
             <div>
                 <section className="Posts">
                     {rposts}
