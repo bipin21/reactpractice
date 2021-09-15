@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { Component, useEffect, useState } from 'react';
+import React , {  useContext, useEffect, useState } from 'react';
+import {  PostAPI } from '../APIConfig';
 
 import './NewPost.css';
 
 // class NewPost extends Component {
 
 const NewPost = (props) => {
+    const api = useContext(PostAPI);
     useEffect(() => {
         console.log(props)
     }, [])
@@ -17,13 +19,13 @@ const NewPost = (props) => {
 
 
     const addNewPost = () => {
-        axios.post(`http://localhost:8088/posts`, post)
+        axios.post(api, post)
             .then(data => {
                 console.log("Success", data);
                 setPost({
                     title: '',
                     content: '',
-                    author: ''
+                    author: 'Dean'
                 })
                 props.execute();
             }
