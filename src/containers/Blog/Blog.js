@@ -7,13 +7,15 @@ import NewPost from '../../components/NewPost/NewPost';
 import './Blog.css';
 import axios from 'axios';
 import post from '../../components/Post/Post';
+import { APIConfig } from '../../components/APIConfig';
 
 const Blog = () => {
 
     const [posts, setPosts] = useState([]);
-
+    const base = 'http://localhost:8088';
     const [selectedId, setSelectedId] = useState(null);
     const [flag, setFlag] = useState(false);
+
 
     useEffect(() => {
         // axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -51,24 +53,30 @@ const Blog = () => {
 
     // 
     return (
+        <APIConfig.Provider 
+        value={
+            {
+                postApi : base + '/posts'
+            }
+        }>
+            <div>
+                <section className="Posts">
+                    {rposts}
+                </section>
+                <section>
+                    <FullPost
+                        id={selectedId}
+                        title={{ ...posts[selectedId - 1] }.title}
+                        body={{ ...posts[selectedId - 1] }.body}
+                        execute={updateFlag}
+                    />
 
-        <div>
-            <section className="Posts">
-                {rposts}
-            </section>
-            <section>
-                <FullPost
-                    id={selectedId}
-                    title={{ ...posts[selectedId - 1] }.title}
-                    body={{ ...posts[selectedId - 1] }.body}
-                    execute={updateFlag}
-                />
-
-            </section>
-            <section>
-                <NewPost execute={updateFlag} />
-            </section>
-        </div>
+                </section>
+                <section>
+                    <NewPost execute={updateFlag} />
+                </section>
+            </div>
+        </APIConfig.Provider>
     );
 }
 

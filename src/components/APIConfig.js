@@ -1,2 +1,2 @@
-import React, {createContext} from 'react';
-export const PostAPI = React.createContext([]);
+import React from 'react';
+export const APIConfig = React.createContext([]);

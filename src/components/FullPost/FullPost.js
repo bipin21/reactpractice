@@ -1,15 +1,16 @@
 import axios from 'axios';
-import React, { Component, useContext, useState } from 'react';
-import { PostAPI } from '../APIConfig';
-import NewPost from '../NewPost/NewPost';
+import React, {  useContext, useState } from 'react';
+import { APIConfig } from '../APIConfig';
+
 
 import './FullPost.css';
 
 const FullPost = (props) => {
-    const api = useContext(PostAPI);
+    const APIS = useContext(APIConfig);
+    const postApi = APIS.postApi;
     const deletePost = (id) => {
         console.log(id)
-        axios.delete(`${api}/${id}`)
+        axios.delete(`${postApi}/${id}`)
             .then(response => {
                 console.log("Success")
                 props.execute()

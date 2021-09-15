@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React , {  useContext, useEffect, useState } from 'react';
-import {  PostAPI } from '../APIConfig';
+import {  APIConfig } from '../APIConfig';
 
 import './NewPost.css';
 
 // class NewPost extends Component {
 
 const NewPost = (props) => {
-    const api = useContext(PostAPI);
+    const APIS = useContext(APIConfig);
+    const postApi = APIS.postApi;
     useEffect(() => {
         console.log(props)
     }, [])
@@ -19,7 +20,7 @@ const NewPost = (props) => {
 
 
     const addNewPost = () => {
-        axios.post(api, post)
+        axios.post(postApi, post)
             .then(data => {
                 console.log("Success", data);
                 setPost({
