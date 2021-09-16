@@ -7,6 +7,7 @@ import NewPost from '../../components/NewPost/NewPost';
 import Header from '../Header/Header';
 import { LikedPosts } from '../../Store/LikedPosts';
 import StatusForm from '../../components/Form/StatusForm';
+import Memos from '../../components/Examples/Memos';
 
 const Blog = (props) => {
     const base = 'http://localhost:8088';
@@ -25,6 +26,8 @@ const Blog = (props) => {
                     <Switch>
                         <Route path="/new-post" component={NewPost} />
                         <Route path="/posts" component={Posts} />
+                        <Route path="/status" component={StatusForm} />
+                        <Route path="/memos" component={Memos} />
                         <Redirect from="/" to="/posts" />
                     </Switch>
                 </div>
