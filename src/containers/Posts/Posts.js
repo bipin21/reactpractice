@@ -1,70 +1,81 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { APIConfig } from "../../components/APIConfig";
-import FullPost from "../../components/FullPost/FullPost";
-import NewPost from "../../components/NewPost/NewPost";
-import Post from "../../components/Post/Post";
-import './Posts.css'
+import React, { useContext, useEffect, useMemo, useState, useCallback, useReducer } from 'react';
+import axios from 'axios';
+import Post from '../../components/Post/Post';
+import './Posts.css';
+import { Link, Route } from 'react-router-dom';
+import FullPost from '../../components/FullPost/FullPost';
+import { APIConfig } from '../../Store/APIConfig';
 
-const Posts = () => {
+
+
+const Posts = (props) => {
+
+    const APIs = useContext(APIConfig);
+    const postAPI = APIs.postAPI;
+
     const [posts, setPosts] = useState([]);
+    const [isLoading, setLoading] = useState(false); // indicates that is retreiving data
+    const [error, setError] = useState();
     const [selectedId, setSelectedId] = useState(null);
-    const [flag, setFlag] = useState(true);
-    const APIS = useContext(APIConfig);
-    const postApi = APIS.postApi;
+
+
 
     function fetchPostsHandler() {
-            // axios.get('https://jsonplaceholder.typicode.com/posts')
-            axios.get(postApi)
-                .then(response => {
-                    const sposts = response.data.slice(0, 10);  // This will get them but take the first 5 then you would have to change the response.data i nthe setPosts
-                    const updatedPosts = sposts.map(post => {  // This will transform anything before assigning it to the state
-                        return {
-                            ...post,
-                            author: ' Dean'
-                        }
-                    });
-                    setPosts([...updatedPosts]);
-                    // setPosts([...response.data]);   // if you dont want to limit
-                });
+        const headers = {
+            'Access-Control-Allow-Origin': '*',
+        }
+        setLoading(true);
+        setError(null); // this is to set the error to null, if there were any previous errors existing 
+        //console.log(isLoading);
+        axios.get(postAPI)
+            .then(response => {
+                setPosts(response.data);
+            })
+            .catch(error => {
+                setError(error.message);
+                setLoading(false);
+            })
+
     }
-    useEffect(fetchPostsHandler, [flag]);
-    
+
+    useEffect(fetchPostsHandler, []); // This will be fetched when mounted
+
     const postSelectedHandler = (id) => {
         setSelectedId(id);
     }
+    
+    //=======================================================
 
-    const updateFlag = () => {
-        setFlag(!flag);
-    }
-
-    // We can do this rather than this :: <Post title={{...posts[1]}.title} />
     const rposts = posts.map(post => {
-        return <Post
-            key={post.id}
-            title={post.title}
-            author={post.author}
-            clicked={() => { postSelectedHandler(post.id) }} />
+        return <Link to={props.match.url + '/' + post.id} key={post.id}>
+            <Post
+                title={post.title}
+                author={post.author}
+                clicked={() => { postSelectedHandler(post.id) }}
+                id={post.id} />
+        </Link>
     });
+
+    let content = <p >No posts available</p>;
+    if (rposts.length > 0) {
+        content = rposts;
+    }
+    else if (error) {
+        content = <p>{error}</p>;
+    }
+    else if (isLoading) {
+        content = <p> Loading ... </p>;  // BONUS MAKE THIS WAIT FOR A 30 seconds
+    }
 
     return (
         <div>
             <section className="Posts">
-                {rposts}
+                {content}
             </section>
-            <section>
-                <FullPost
-                    id={selectedId}
-                    title={{ ...posts[selectedId - 1] }.title}
-                    body={{ ...posts[selectedId - 1] }.body}
-                    execute={updateFlag}
-                />
-
-            </section>
-            <section>
-                <NewPost execute={updateFlag} />
-            </section>
+            <Route path={props.match.path + '/:id'} component={FullPost} /> 
+            
         </div>
+
     );
 }
 
