@@ -10,9 +10,10 @@ const StatusForm = () => {
     const statusText = localStorage.getItem('status');
 
     return(
-        <div>
+        <div className="status">
             <form onSubmit={handleSubmit} ref={statusForm}>
                 <label>Status</label>
+                <p> -- {statusText}</p>
                 <textarea name="status" defaultValue={statusText}>
                 </textarea>
                 <button>Update</button>

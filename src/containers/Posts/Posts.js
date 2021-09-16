@@ -6,6 +6,7 @@ import { Link, Route } from 'react-router-dom';
 import FullPost from '../../components/FullPost/FullPost';
 import { APIConfig } from '../../Store/APIConfig';
 import StatusForm from '../../components/Form/StatusForm';
+import EditPost from '../../components/NewPost/EditPost';
 
 
 
@@ -75,7 +76,8 @@ const Posts = (props) => {
             <section className="Posts">
                 {content}
             </section>
-            <Route path={props.match.path + '/:id'} component={FullPost} /> 
+            <Route path={props.match.path + '/:id'} component={FullPost} />
+            <Route path={props.match.path + '/:id/edit'} component={EditPost} /> 
             
         </div>
 

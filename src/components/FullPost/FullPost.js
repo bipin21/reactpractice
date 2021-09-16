@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {  useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { APIConfig } from '../../Store/APIConfig';
 
 
@@ -34,7 +35,7 @@ const FullPost = (props) => {
 
     const deletePost = (id) => {
         console.log(id)
-        axios.delete(`${postAPI}/${id}`)
+        axios.delete(`${postAPI}${id}`)
             .then(response => {
                 props.history.push('/');
             }
@@ -49,6 +50,7 @@ const FullPost = (props) => {
                 <h1>{postCall.title}</h1>
                 <p>{postCall.content}</p>
                 <div className="Edit">
+                    <Link to={props.match.url+'/edit'} >Edit</Link>
                     <button className="Delete" onClick={() => { deletePost(postCall.id) }}>Delete</button>
                 </div>
             </div>
