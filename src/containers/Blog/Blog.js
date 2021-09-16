@@ -6,6 +6,7 @@ import Posts from '../Posts/Posts';
 import NewPost from '../../components/NewPost/NewPost';
 import Header from '../Header/Header';
 import { LikedPosts } from '../../Store/LikedPosts';
+import StatusForm from '../../components/Form/StatusForm';
 
 const Blog = (props) => {
     const base = 'http://localhost:8088';

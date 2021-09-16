@@ -6,7 +6,16 @@ import './Post.css';
 const Post = (props) => {
 
     const { likedPosts, setLikedPosts } = useContext(LikedPosts);
+    const handleUnfollow = (e) =>{
+        // console.log(e.target.id)
+        const id = e.target.id;
+        setLikedPosts(likedPosts.filter(item => item != id))
 
+        // For string check
+        // setLikedPosts(likedPosts.filter(item => item !== id))
+        
+        console.log(likedPosts)
+    }
     return (
         <article className="Post" onClick={props.clicked}>
             <h1>{props.title}</h1>
@@ -16,7 +25,7 @@ const Post = (props) => {
             {
                 likedPosts.includes(props.id)
                     ?
-                    <button onClick={() => { console.log('still not configured'); }}>
+                    <button id={props.id} onClick={handleUnfollow}>
                         Unfollow </button>
                     :
                     <button onClick={() => {  setLikedPosts([...likedPosts, props.id])

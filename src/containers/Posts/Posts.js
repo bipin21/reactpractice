@@ -5,6 +5,7 @@ import './Posts.css';
 import { Link, Route } from 'react-router-dom';
 import FullPost from '../../components/FullPost/FullPost';
 import { APIConfig } from '../../Store/APIConfig';
+import StatusForm from '../../components/Form/StatusForm';
 
 
 
@@ -70,6 +71,7 @@ const Posts = (props) => {
     
     return (
         <div>
+             <StatusForm />
             <section className="Posts">
                 {content}
             </section>
