@@ -22,6 +22,9 @@ const Header = () => {
                         <li>
                             <Link to="/memos">Memo/Callback</Link>
                         </li>
+                        <li>
+                            <Link to="/reducers">Reducers</Link>
+                        </li>
                     </ul>
                 </nav>
             </div>
