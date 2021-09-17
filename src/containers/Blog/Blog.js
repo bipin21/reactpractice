@@ -9,6 +9,7 @@ import { LikedPosts } from '../../Store/LikedPosts';
 import StatusForm from '../../components/Form/StatusForm';
 import Memos from '../../components/Examples/Memos';
 import ReduceEx from '../../components/Examples/ReduceEx';
+import Following from '../../components/Examples/Following';
 
 const Blog = (props) => {
     const base = 'http://localhost:8088';
@@ -29,8 +30,8 @@ const Blog = (props) => {
                         <Route path="/posts" component={Posts} />
                         <Route path="/status" component={StatusForm} />
                         <Route path="/memos" component={Memos} />
-                        <Route path="/memos" component={Memos} />
                         <Route path="/reducers" component={ReduceEx} />
+                        <Route path="/followings" component={Following} />
 
                         <Redirect from="/" to="/posts" />
                     </Switch>

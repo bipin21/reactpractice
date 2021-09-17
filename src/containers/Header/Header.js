@@ -25,6 +25,10 @@ const Header = () => {
                         <li>
                             <Link to="/reducers">Reducers</Link>
                         </li>
+                        <li>
+                            <Link to="/followings">Following</Link>
+                        </li>
+                        
                     </ul>
                 </nav>
             </div>
